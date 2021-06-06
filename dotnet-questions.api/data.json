@@ -1,0 +1,46 @@
+﻿[
+  {
+    "id": 1,
+    "content": "Which of the following is a reference type in C#?",
+    "answers": [
+      {
+        "content": "String",
+        "isCorrect": true
+      },
+      {
+        "content": "Long",
+        "isCorrect": false
+      },
+      {
+        "content": "Boolean",
+        "isCorrect": false
+      },
+      {
+        "content": "None of the above",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "content": "Which of the following is the correct way of declaring an array in C#?",
+    "answers": [
+      {
+        "content": "int[] IntArray = new int[]",
+        "isCorrect": false
+      },
+      {
+        "content": "int IntArray = new int[5]",
+        "isCorrect": false
+      },
+      {
+        "content": "int[] IntArray = new int[5]",
+        "isCorrect": true
+      },
+      {
+        "content": "int[5] IntArray = new int[]",
+        "isCorrect": false
+      }
+    ]
+  }
+]
