@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Text.Json;
 using dotnet_questions.api.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,13 +25,14 @@ namespace dotnet_questions.api.Controllers
         [HttpGet("{id}")]
         public JsonResult Show(int id)
         {
-            var data = _questionService.GetAll();
+            var data = _questionService.Find(id);
             return new JsonResult(data);
         }
         
         [HttpPost]
-        public IActionResult Create(int id)
+        public IActionResult Create([FromBody] string jsonString)
         {
+            _questionService.Create(jsonString);
             return Ok("Запрос успешно выполнен");
         }
         
@@ -42,8 +43,10 @@ namespace dotnet_questions.api.Controllers
         }
         
         [HttpPut("{id}")]
-        public IActionResult Update(int id)
+        public async Task<ActionResult> Edit(int id, [FromBody] string jsonString)
         {
+            var json = await new StreamReader(Request.Body).ReadToEndAsync();
+            var result = await _questionService.Update(id, jsonString);
             return Ok("Запрос успешно выполнен");
         }
     }

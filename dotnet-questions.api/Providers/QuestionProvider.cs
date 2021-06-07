@@ -8,14 +8,12 @@ namespace dotnet_questions.api.Providers
 {
     public class QuestionProvider : IQuestionProvider
     {
-        private readonly List<Question> _questions;
-        
         public QuestionProvider(IFileService fileService)
         {
             var content = fileService.ReadAll("data.json");
-            _questions = JsonConvert.DeserializeObject<List<Question>>(content);
+            Questions = JsonConvert.DeserializeObject<List<Question>>(content);
         }
 
-        public List<Question> GetAll() => _questions;
+        public List<Question> Questions { get; init; }
     }
 }

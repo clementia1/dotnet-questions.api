@@ -5,6 +5,6 @@ namespace dotnet_questions.api.Services.Abstractions
 {
     public interface IQuestionProvider
     {
-        List<Question> GetAll();
+        List<Question> Questions { get; init; }
     }
 }
