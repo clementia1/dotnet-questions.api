@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dotnet_questions.api.Providers;
+using dotnet_questions.api.Services;
+using dotnet_questions.api.Services.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,8 +29,11 @@ namespace dotnet_questions.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddTransient<>();
+            services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IQuestionService, QuestionService>();
+            services.AddSingleton<IQuestionProvider, QuestionProvider>();
             services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "dotnet_questions.api", Version = "v1"});
