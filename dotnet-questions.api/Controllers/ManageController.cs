@@ -45,15 +45,15 @@ namespace dotnet_questions.api.Controllers
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             var newQuestionId = await _questionService.Create(question);
             
-            return CreatedAtAction(nameof(Create), new { id = newQuestionId });
+            return CreatedAtAction(nameof(Create), new { id = newQuestionId }, question);
         }
         
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             var result = await _questionService.Remove(id);
-            return result ? NotFound() : CreatedAtAction(nameof(Delete), new { id = question.Id });;
+            return result ? NoContent() : NotFound();
         }
         
         [HttpPut("{id:int}")]
@@ -61,7 +61,7 @@ namespace dotnet_questions.api.Controllers
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             var result = await _questionService.Update(id, question);
-            return result ? NotFound() : CreatedAtAction(nameof(Edit), new { id = question.Id });;
+            return result ? NoContent() : NotFound();
         }
     }
 }
