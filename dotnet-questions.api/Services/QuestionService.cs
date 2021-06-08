@@ -18,27 +18,25 @@ namespace dotnet_questions.api.Services
         
         public async Task<IReadOnlyCollection<Question>> GetAll()
         {
-            return await Task.Run(() => _db.Questions);
+            return await Task.FromResult(_db.Questions);
         }
 
         public async Task<Question> Find(int id)
         {
-            return await Task.Run(() => _db.Questions.FirstOrDefault(item => item.Id == id));
+            return await Task.FromResult(_db.Questions.FirstOrDefault(item => item.Id == id));
         }
 
-        public async Task Create(string jsonString)
+        public async Task Create(Question question)
         {
-            var question = JsonSerializer.Deserialize<Question>(jsonString);
-            await Task.Run(() => _db.Questions.Add(question));
+            _db.Questions.Add(question);
+            await Task.FromResult(true);
         }
 
-        public async Task<bool> Update(int id, string jsonString)
+        public async Task<bool> Update(int id, Question newQuestion)
         {
-            var questionIndex = await Task.Run(() => _db.Questions.FindIndex(item => item.Id == id));
-
+            var questionIndex = await Task.FromResult(_db.Questions.FindIndex(item => item.Id == id));
             if (questionIndex == -1) return false;
             
-            var newQuestion = JsonSerializer.Deserialize<Question>(jsonString);
             _db.Questions[questionIndex] = newQuestion;
             return true;
         }

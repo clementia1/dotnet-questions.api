@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using dotnet_questions.api.Models;
 using dotnet_questions.api.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,31 +23,34 @@ namespace dotnet_questions.api.Controllers
             _questionService = questionService;
         }
 
-        [HttpGet("{id}")]
-        public JsonResult Show(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Show(int id)
         {
-            var data = _questionService.Find(id);
-            return new JsonResult(data);
+            _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
+            var data = await _questionService.Find(id);
+            return data is null ? NotFound("Requested item not found") : new JsonResult(data);
         }
         
         [HttpPost]
-        public IActionResult Create([FromBody] string jsonString)
+        public async Task<IActionResult> Create([FromBody] Question question)
         {
-            _questionService.Create(jsonString);
-            return Ok("Запрос успешно выполнен");
+            _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
+            await _questionService.Create(question);
+            return Ok("Item successfully added");
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
+            _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             return Ok("Запрос успешно выполнен");
         }
         
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Edit(int id, [FromBody] string jsonString)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Edit(int id, [FromBody] Question question)
         {
-            var json = await new StreamReader(Request.Body).ReadToEndAsync();
-            var result = await _questionService.Update(id, jsonString);
+            _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
+            var result = await _questionService.Update(id, question);
             return Ok("Запрос успешно выполнен");
         }
     }

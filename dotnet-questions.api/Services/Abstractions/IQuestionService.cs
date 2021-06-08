@@ -8,7 +8,7 @@ namespace dotnet_questions.api.Services.Abstractions
     {
         Task<IReadOnlyCollection<Question>> GetAll();
         Task<Question> Find(int id);
-        Task Create(string jsonString);
-        Task<bool> Update(int id, string jsonString);
+        Task Create(Question question);
+        Task<bool> Update(int id, Question newQuestion);
     }
 }
