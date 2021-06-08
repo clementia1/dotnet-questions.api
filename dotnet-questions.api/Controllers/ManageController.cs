@@ -60,7 +60,7 @@ namespace dotnet_questions.api.Controllers
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             var result = await _questionService.Update(id, question);
-            return Ok("Запрос успешно выполнен");
+            return result ? NotFound() : CreatedAtAction(nameof(Edit), new { id = question.Id });;
         }
     }
 }
