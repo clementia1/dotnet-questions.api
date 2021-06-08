@@ -36,11 +36,25 @@ namespace dotnet_questions.api.Services
 
         public async Task<bool> Update(int id, Question newQuestion)
         {
-            var questionIndex = await Task.FromResult(_db.Questions.FindIndex(item => item.Id == id));
+            var questionIndex = await FindIndex(id);
             if (questionIndex == -1) return false;
             
             _db.Questions[questionIndex] = newQuestion;
             return true;
+        }
+
+        public async Task<bool> Remove(int id)
+        {
+            var questionIndex = await FindIndex(id);
+            if (questionIndex == -1) return false;
+            
+            _db.Questions.RemoveAt(questionIndex);
+            return true;
+        }
+        
+        private async Task<int> FindIndex(int id)
+        {
+            return await Task.FromResult(_db.Questions.FindIndex(item => item.Id == id));
         }
     }
 }

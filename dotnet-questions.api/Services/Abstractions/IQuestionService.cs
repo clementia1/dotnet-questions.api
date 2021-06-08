@@ -10,5 +10,6 @@ namespace dotnet_questions.api.Services.Abstractions
         Task<Question> Find(int id);
         Task<int> Create(Question question);
         Task<bool> Update(int id, Question newQuestion);
+        Task<bool> Remove(int id);
     }
 }

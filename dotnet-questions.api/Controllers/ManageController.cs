@@ -52,7 +52,8 @@ namespace dotnet_questions.api.Controllers
         public IActionResult Delete(int id)
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
-            return Ok("Запрос успешно выполнен");
+            var result = await _questionService.Remove(id);
+            return result ? NotFound() : CreatedAtAction(nameof(Delete), new { id = question.Id });;
         }
         
         [HttpPut("{id:int}")]
