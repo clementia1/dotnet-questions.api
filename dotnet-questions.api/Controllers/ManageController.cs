@@ -24,10 +24,10 @@ namespace dotnet_questions.api.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> ShowLast(int showLast = 10)
+        public async Task<IActionResult> ShowLast(int showLastCount = 10)
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
-            var data = await _questionService.GetLast(showLast);
+            var data = await _questionService.GetLast(showLastCount);
             return data is null ? NotFound() : new JsonResult(data);
         }
 

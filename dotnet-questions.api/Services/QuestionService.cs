@@ -19,9 +19,9 @@ namespace dotnet_questions.api.Services
             _db = provider;
         }
         
-        public async Task<IReadOnlyCollection<Question>> GetLast(int showLast)
+        public async Task<IReadOnlyCollection<Question>> GetLast(int getLastCount)
         {
-            return await Task.FromResult(_db.Questions.Skip(Math.Max(0, _db.Questions.Count - showLast)).ToList());
+            return await Task.FromResult(_db.Questions.Skip(Math.Max(0, _db.Questions.Count - getLastCount)).ToList());
         }
 
         public async Task<Question> Find(int id)
