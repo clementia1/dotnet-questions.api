@@ -8,9 +8,11 @@ namespace dotnet_questions.api.Providers
 {
     public class QuestionProvider : IQuestionProvider
     {
+        private const string DataFile = "data.json";
+        
         public QuestionProvider(IFileService fileService)
         {
-            var content = fileService.ReadAll("data.json");
+            var content = fileService.ReadFile(DataFile);
             Questions = JsonConvert.DeserializeObject<List<Question>>(content);
         }
 

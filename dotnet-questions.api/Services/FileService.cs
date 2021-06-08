@@ -6,7 +6,7 @@ namespace dotnet_questions.api.Services
 {
     public class FileService : IFileService
     {
-        public string ReadAll(string filepath)
+        public string ReadFile(string filepath)
         {
             return File.ReadAllText(filepath);
         }
