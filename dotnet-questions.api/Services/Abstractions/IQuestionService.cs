@@ -6,7 +6,7 @@ namespace dotnet_questions.api.Services.Abstractions
 {
     public interface IQuestionService
     {
-        Task<IReadOnlyCollection<Question>> GetAll();
+        Task<IReadOnlyCollection<Question>> GetLast(int showLast);
         Task<Question> Find(int id);
         Task Create(Question question);
         Task<bool> Update(int id, Question newQuestion);

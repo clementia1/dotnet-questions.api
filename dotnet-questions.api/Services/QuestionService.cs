@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text.Json;
@@ -16,9 +17,9 @@ namespace dotnet_questions.api.Services
             _db = provider;
         }
         
-        public async Task<IReadOnlyCollection<Question>> GetAll()
+        public async Task<IReadOnlyCollection<Question>> GetLast(int showLast)
         {
-            return await Task.FromResult(_db.Questions);
+            return await Task.FromResult(_db.Questions.Skip(Math.Max(0, _db.Questions.Count - showLast)).ToList());
         }
 
         public async Task<Question> Find(int id)
@@ -28,6 +29,7 @@ namespace dotnet_questions.api.Services
 
         public async Task Create(Question question)
         {
+            question.Id = question.GetHashCode();
             _db.Questions.Add(question);
             await Task.FromResult(true);
         }

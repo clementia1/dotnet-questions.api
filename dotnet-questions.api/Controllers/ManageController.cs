@@ -22,13 +22,21 @@ namespace dotnet_questions.api.Controllers
             _logger = logger;
             _questionService = questionService;
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> ShowLast(int showLast = 10)
+        {
+            _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
+            var data = await _questionService.GetLast(showLast);
+            return data is null ? NotFound() : new JsonResult(data);
+        }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Show(int id)
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             var data = await _questionService.Find(id);
-            return data is null ? NotFound("Requested item not found") : new JsonResult(data);
+            return data is null ? NotFound() : new JsonResult(data);
         }
         
         [HttpPost]
@@ -36,6 +44,7 @@ namespace dotnet_questions.api.Controllers
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
             await _questionService.Create(question);
+            
             return Ok("Item successfully added");
         }
         
