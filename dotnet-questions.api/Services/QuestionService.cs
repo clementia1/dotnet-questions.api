@@ -27,11 +27,11 @@ namespace dotnet_questions.api.Services
             return await Task.FromResult(_db.Questions.FirstOrDefault(item => item.Id == id));
         }
 
-        public async Task Create(Question question)
+        public async Task<int> Create(Question question)
         {
             question.Id = question.GetHashCode();
             _db.Questions.Add(question);
-            await Task.FromResult(true);
+            return await Task.FromResult(question.Id);
         }
 
         public async Task<bool> Update(int id, Question newQuestion)

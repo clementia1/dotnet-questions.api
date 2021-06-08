@@ -43,9 +43,9 @@ namespace dotnet_questions.api.Controllers
         public async Task<IActionResult> Create([FromBody] Question question)
         {
             _logger.LogInformation($"{DateTime.UtcNow}: {Request.Path.Value} {Request.Method} request received");
-            await _questionService.Create(question);
+            var newQuestionId = await _questionService.Create(question);
             
-            return Ok("Item successfully added");
+            return CreatedAtAction(nameof(Create), new { id = newQuestionId });
         }
         
         [HttpDelete("{id:int}")]

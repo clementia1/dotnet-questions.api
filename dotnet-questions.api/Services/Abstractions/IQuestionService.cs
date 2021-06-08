@@ -8,7 +8,7 @@ namespace dotnet_questions.api.Services.Abstractions
     {
         Task<IReadOnlyCollection<Question>> GetLast(int showLast);
         Task<Question> Find(int id);
-        Task Create(Question question);
+        Task<int> Create(Question question);
         Task<bool> Update(int id, Question newQuestion);
     }
 }
