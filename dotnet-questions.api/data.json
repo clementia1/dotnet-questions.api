@@ -42,5 +42,27 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": 3,
+    "content": "<pre><code>public static <span><span>void</span></span> <span>Main</span><span>(</span>)\n<span>{</span>\n\t<span><span>var</span></span> x<span>;</span>\n\tx<span>=</span><span>100</span><span>;</span>\n\tConsole<span>.</span><span>WriteLine</span><span>(</span>x<span>)</span><span>;</span>\n<span>}</span>\n</code></pre>",
+    "answers": [
+      {
+        "content": "100",
+        "isCorrect": false
+      },
+      {
+        "content": "0",
+        "isCorrect": false
+      },
+      {
+        "content": "Compile-time error",
+        "isCorrect": true
+      },
+      {
+        "content": "Runtime error",
+        "isCorrect": false
+      }
+    ]
   }
 ]
